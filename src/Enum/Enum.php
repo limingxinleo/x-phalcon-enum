@@ -75,14 +75,4 @@ abstract class Enum
     {
         return static::getInstance()->$method(...$arguments);
     }
-
-    public function toArray()
-    {
-
-    }
-
-    public function constToEnums()
-    {
-        return $this;
-    }
 }
