@@ -22,4 +22,9 @@ class BaseTest extends TestCase
     {
         $this->assertEquals('非法的TOKEN', ErrorCode::getMessage(ErrorCode::$ENUM_INVALID_TOKEN));
     }
+
+    public function testDesc()
+    {
+        $this->assertEquals('需要重新登录', ErrorCode::getDesc(ErrorCode::$ENUM_INVALID_TOKEN));
+    }
 }
