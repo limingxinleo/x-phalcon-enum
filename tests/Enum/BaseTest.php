@@ -13,10 +13,13 @@ use Tests\TestCase;
 
 class BaseTest extends TestCase
 {
-    public function testBase()
+    public function testCode()
     {
-        dd(ErrorCode::getMessage(ErrorCode::$ENUM_INVALID_TOKEN));
-        $client = ErrorCode::getInstance();
-        dd($client->getMessage(ErrorCode::$ENUM_INVALID_TOKEN));
+        $this->assertEquals(700, ErrorCode::$ENUM_INVALID_TOKEN);
+    }
+
+    public function testMessage()
+    {
+        $this->assertEquals('非法的TOKEN', ErrorCode::getMessage(ErrorCode::$ENUM_INVALID_TOKEN));
     }
 }
