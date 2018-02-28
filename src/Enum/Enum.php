@@ -60,14 +60,21 @@ abstract class Enum
         // 获取变量
         $ref = new ReflectionClass(static::class);
         $properties = $ref->getDefaultProperties();
+        $arr = [];
         foreach ($properties as $key => $val) {
             if (Text::startsWith($key, 'ENUM_') && isset($annotations[$key])) {
                 // 获取对应注释
                 $ret = $annotations[$key]->get(Text::camelize($name));
-                $this->$name[$val] = $ret->getArgument(0);
+                $arr[$val] = $ret->getArgument(0);
             }
         }
 
+        if (version_compare(PHP_VERSION, 7, '<')) {
+            // 版本小于7
+            return isset($arr[$code]) ? $arr[$code] : '';
+        }
+
+        $this->$name = $arr;
         return isset($this->$name[$code]) ? $this->$name[$code] : '';
     }
 
