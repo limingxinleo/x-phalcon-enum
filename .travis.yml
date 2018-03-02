@@ -1,0 +1,44 @@
+language: php
+
+dist: trusty
+sudo: false
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
+
+git:
+  depth: 1
+
+before_install:
+  - export PHP_MAJOR="$(`phpenv which php` -r 'echo phpversion();' | cut -d '.' -f 1)"
+  - export PHP_MINOR="$(`phpenv which php` -r 'echo phpversion();' | cut -d '.' -f 2)"
+  - echo $PHP_MAJOR
+  - echo $PHP_MINOR
+
+install:
+  - cd $TRAVIS_BUILD_DIR
+  # 更新扩展
+  - sudo apt-get update
+  - sudo apt-get install libpcre3-dev gcc make re2c
+  # 安装Phalcon扩展
+  - git clone https://github.com/phalcon/cphalcon.git --depth=1
+  - cd $TRAVIS_BUILD_DIR/cphalcon/build
+  - sudo ./install --phpize $(phpenv which phpize) --php-config $(phpenv which php-config)
+  - phpenv config-add $TRAVIS_BUILD_DIR/phalcon.ini
+  # 安装项目
+  - composer self-update
+  - cd $TRAVIS_BUILD_DIR
+  - composer install --prefer-dist --optimize-autoloader
+
+script:
+  - cd $TRAVIS_BUILD_DIR
+  - ./vendor/bin/phpunit

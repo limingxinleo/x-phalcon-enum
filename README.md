@@ -1,5 +1,7 @@
 # x-phalcon-enum
 
+[![Build Status](https://travis-ci.org/limingxinleo/x-phalcon-enum.svg?branch=master)](https://travis-ci.org/limingxinleo/x-phalcon-enum)
+
 ## 安装
 ~~~
 composer require limingxinleo/x-phalcon-enum
