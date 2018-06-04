@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 namespace Xin\Phalcon\Enum;
 
-use Phalcon\Text;
+use limx\Support\Str;
 use Xin\Phalcon\Enum\Adapter\AdapterInterface;
 use Xin\Phalcon\Enum\Adapter\PhalconAdapter;
 use Xin\Phalcon\Enum\Adapter\ReflectionAdapter;
@@ -38,7 +38,7 @@ abstract class Enum
 
     public function __call($name, $arguments)
     {
-        if (!Text::startsWith($name, 'get')) {
+        if (!Str::startsWith($name, 'get')) {
             throw new EnumException('The function is not defined!');
         }
         if (!isset($arguments) || count($arguments) === 0) {
