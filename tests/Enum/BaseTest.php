@@ -50,5 +50,8 @@ class BaseTest extends TestCase
         $res = ErrorCodeNoPhalcon::getDesc($code);
         $res2 = ErrorCode::getDesc($code);
         $this->assertEquals($res, $res2);
+
+        $res3 = ErrorCodeNoPhalcon::getMsg($code);
+        $this->assertEquals('', $res3);
     }
 }
