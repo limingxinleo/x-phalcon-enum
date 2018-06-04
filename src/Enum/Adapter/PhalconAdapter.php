@@ -26,15 +26,15 @@ class PhalconAdapter implements AdapterInterface
         $reflection = $adapter->get($this->class);
         $annotations = $reflection->getPropertiesAnnotations();
 
-        $arr = [];
+        $result = [];
         foreach ($properties as $key => $val) {
             if (Text::startsWith($key, 'ENUM_') && isset($annotations[$key])) {
                 // 获取对应注释
                 $ret = $annotations[$key]->get(Text::camelize($name));
-                $arr[$val] = $ret->getArgument(0);
+                $result[$val] = $ret->getArgument(0);
             }
         }
 
-        return $arr;
+        return $result;
     }
 }

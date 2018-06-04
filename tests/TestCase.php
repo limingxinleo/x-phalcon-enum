@@ -23,6 +23,5 @@ class TestCase extends UnitTestCase
 
     public function setUp()
     {
-
     }
 }

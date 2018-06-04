@@ -8,8 +8,10 @@
 // +----------------------------------------------------------------------
 namespace Xin\Phalcon\Enum\Adapter;
 
-
-class ReflectionAdapter
+class ReflectionAdapter implements AdapterInterface
 {
-
+    public function getAnnotationsByName($name, $properties)
+    {
+        // TODO: Implement getAnnotationsByName() method.
+    }
 }

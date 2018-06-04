@@ -9,6 +9,7 @@
 namespace Xin\Phalcon\Enum;
 
 use Phalcon\Text;
+use Xin\Phalcon\Enum\Adapter\AdapterInterface;
 use Xin\Phalcon\Enum\Adapter\PhalconAdapter;
 use Xin\Phalcon\Enum\Adapter\ReflectionAdapter;
 use Xin\Phalcon\Enum\Exception\EnumException;
@@ -22,6 +23,7 @@ abstract class Enum
 
     public static $_instance;
 
+    /** @var AdapterInterface */
     public $_adapter;
 
     protected $phalconExtEnable = true;

@@ -37,6 +37,5 @@ class BaseTest extends TestCase
 
         $this->assertEquals('非法的TOKEN', $msg2);
         $this->assertEquals('非法的TOKEN 2', $msg1);
-
     }
 }
