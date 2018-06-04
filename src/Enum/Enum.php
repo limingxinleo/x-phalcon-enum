@@ -12,9 +12,11 @@ use Phalcon\Text;
 use Xin\Phalcon\Enum\Exception\EnumException;
 use Phalcon\Annotations\Adapter\Memory as MemoryAdapter;
 use ReflectionClass;
+use Xin\Traits\Common\InstanceTrait;
 
 abstract class Enum
 {
+    use InstanceTrait;
 
     public static $_instance;
 
@@ -25,15 +27,6 @@ abstract class Enum
     private function __construct()
     {
 
-    }
-
-    public static function getInstance()
-    {
-        if (isset(static::$_instance) && static::$_instance instanceof Enum) {
-            return static::$_instance;
-        }
-
-        return static::$_instance = new static();
     }
 
     public function __call($name, $arguments)
