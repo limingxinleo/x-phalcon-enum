@@ -9,6 +9,8 @@
 namespace Xin\Phalcon\Enum;
 
 use Phalcon\Text;
+use Xin\Phalcon\Enum\Adapter\PhalconAdapter;
+use Xin\Phalcon\Enum\Adapter\ReflectionAdapter;
 use Xin\Phalcon\Enum\Exception\EnumException;
 use Phalcon\Annotations\Adapter\Memory as MemoryAdapter;
 use ReflectionClass;
@@ -17,20 +19,20 @@ use Xin\Traits\Common\InstanceTrait;
 abstract class Enum
 {
     use InstanceTrait;
-    
+
     public static $_instance;
 
-    public $_adapter = 'memory';
-
-    public $_expire = 3600;
-
-    protected $_annotation;
+    public $_adapter;
 
     protected $phalconExtEnable = true;
 
     private function __construct()
     {
-        $this->_annotation = new Annotation($this->phalconExtEnable);
+        if ($this->phalconExtEnable && extension_loaded('phalcon')) {
+            $this->_adapter = new PhalconAdapter(static::class);
+        } else {
+            $this->_adapter = new ReflectionAdapter(static::class);
+        }
     }
 
     public function __call($name, $arguments)
@@ -53,19 +55,7 @@ abstract class Enum
         $ref = new ReflectionClass(static::class);
         $properties = $ref->getDefaultProperties();
 
-        // 获取注释
-        $adapter = new MemoryAdapter();
-        $reflection = $adapter->get(static::class);
-        $annotations = $reflection->getPropertiesAnnotations();
-
-        $arr = [];
-        foreach ($properties as $key => $val) {
-            if (Text::startsWith($key, 'ENUM_') && isset($annotations[$key])) {
-                // 获取对应注释
-                $ret = $annotations[$key]->get(Text::camelize($name));
-                $arr[$val] = $ret->getArgument(0);
-            }
-        }
+        $arr = $this->_adapter->getAnnotationsByName($name, $properties);
 
         if (version_compare(PHP_VERSION, 7, '<')) {
             // 版本小于7
