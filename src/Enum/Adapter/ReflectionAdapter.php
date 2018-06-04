@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 namespace Xin\Phalcon\Enum\Adapter;
 
-use Phalcon\Text;
+use limx\Support\Str;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -25,7 +25,7 @@ class ReflectionAdapter implements AdapterInterface
     {
         $result = [];
         foreach ($properties as $key => $val) {
-            if (Text::startsWith($key, 'ENUM_')) {
+            if (Str::startsWith($key, 'ENUM_')) {
                 // 获取对应注释
                 $ret = new ReflectionProperty($this->class, $key);
                 $result[$val] = $this->getCommentByName($ret->getDocComment(), $name);
@@ -43,7 +43,7 @@ class ReflectionAdapter implements AdapterInterface
      */
     protected function getCommentByName($doc, $name)
     {
-        $name = Text::camelize($name);
+        $name = Str::studly($name);
         $pattern = "/\@{$name}\(\'(.*)\'\)/U";
         if (preg_match($pattern, $doc, $result)) {
             if (isset($result[1])) {
