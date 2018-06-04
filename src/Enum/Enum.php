@@ -15,16 +15,19 @@ use ReflectionClass;
 
 abstract class Enum
 {
-
     public static $_instance;
 
     public $_adapter = 'memory';
 
     public $_expire = 3600;
 
+    protected $_annotation;
+
+    protected $phalconExtEnable = true;
+
     private function __construct()
     {
-
+        $this->_annotation = new Annotation($this->phalconExtEnable);
     }
 
     public static function getInstance()
@@ -52,14 +55,15 @@ abstract class Enum
             return isset($this->$name[$code]) ? $this->$name[$code] : '';
         }
 
+        // 获取变量
+        $ref = new ReflectionClass(static::class);
+        $properties = $ref->getDefaultProperties();
+
         // 获取注释
         $adapter = new MemoryAdapter();
         $reflection = $adapter->get(static::class);
         $annotations = $reflection->getPropertiesAnnotations();
 
-        // 获取变量
-        $ref = new ReflectionClass(static::class);
-        $properties = $ref->getDefaultProperties();
         $arr = [];
         foreach ($properties as $key => $val) {
             if (Text::startsWith($key, 'ENUM_') && isset($annotations[$key])) {
