@@ -13,7 +13,6 @@ use Xin\Phalcon\Enum\Adapter\AdapterInterface;
 use Xin\Phalcon\Enum\Adapter\PhalconAdapter;
 use Xin\Phalcon\Enum\Adapter\ReflectionAdapter;
 use Xin\Phalcon\Enum\Exception\EnumException;
-use Phalcon\Annotations\Adapter\Memory as MemoryAdapter;
 use ReflectionClass;
 use Xin\Traits\Common\InstanceTrait;
 
