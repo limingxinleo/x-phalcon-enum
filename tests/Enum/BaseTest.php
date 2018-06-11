@@ -54,4 +54,12 @@ class BaseTest extends TestCase
         $res3 = ErrorCodeNoPhalcon::getMsg($code);
         $this->assertEquals('', $res3);
     }
+
+    public function testNotNumber()
+    {
+        $code = ErrorCode::$ENUM_NOT_NUMBER;
+        $res = ErrorCode::getMessage($code);
+
+        $this->assertEquals('Code不为数字', $res);
+    }
 }

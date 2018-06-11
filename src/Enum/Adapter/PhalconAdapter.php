@@ -28,10 +28,15 @@ class PhalconAdapter implements AdapterInterface
 
         $result = [];
         foreach ($properties as $key => $val) {
-            if (Text::startsWith($key, 'ENUM_') && isset($annotations[$key])) {
+            $isValid = Text::startsWith($key, 'ENUM_') // 必须以ENUM_开头
+                && isset($annotations[$key]) // 当前字段存在注释
+                && $annotations[$key]->has(Text::camelize($name)); // 当前字段存在此注解的注释
+
+            if ($isValid) {
                 // 获取对应注释
                 $ret = $annotations[$key]->get(Text::camelize($name));
                 $result[$val] = $ret->getArgument(0);
+
             }
         }
 

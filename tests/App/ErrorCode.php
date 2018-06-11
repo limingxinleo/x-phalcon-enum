@@ -17,4 +17,9 @@ class ErrorCode extends Enum
      * @Desc('需要重新登录')
      */
     public static $ENUM_INVALID_TOKEN = 700;
+
+    /**
+     * @Message('Code不为数字')
+     */
+    public static $ENUM_NOT_NUMBER = 'OP1000';
 }
