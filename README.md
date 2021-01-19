@@ -21,8 +21,17 @@ class ErrorCode extends Enum
 }
 ~~~
 
-使用
+
+
+
+获取单个枚举
 ~~~
 $code = ErrorCode::$ENUM_INVALID_TOKEN;
 $message = ErrorCode::getMessage($code);
+~~~
+
+获取枚举数组
+~~~
+
+$message = ErrorCode::toArray();
 ~~~
