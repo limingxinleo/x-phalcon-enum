@@ -16,6 +16,12 @@ use Xin\Phalcon\Enum\Exception\EnumException;
 use ReflectionClass;
 use Xin\Traits\Common\InstanceTrait;
 
+/**
+ * Class Enum
+ * @package Xin\Phalcon\Enum
+ * @method getMessage($code)
+ * @method getDesc($code)
+ */
 abstract class Enum
 {
     use InstanceTrait;
@@ -70,5 +76,19 @@ abstract class Enum
     public static function __callStatic($method, $arguments)
     {
         return static::getInstance()->$method(...$arguments);
+    }
+
+    /**
+     * 获取枚举数组
+     * @return array
+     */
+    public static function toArray(){
+
+        $ref = new ReflectionClass(static::class);
+        $properties = $ref->getDefaultProperties();
+        $_adapter = new ReflectionAdapter(static::class);
+        $arr = $_adapter->getAnnotationsByName('Message', $properties);
+
+        return $arr;
     }
 }
